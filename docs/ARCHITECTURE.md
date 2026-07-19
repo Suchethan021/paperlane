@@ -156,9 +156,14 @@ running in ~300 ms with no database, no HTTP and no mocks. It's also why there i
 exactly one definition of "can this person see this" rather than a condition
 copy-pasted across six route handlers.
 
-**Known gap:** these tests prove the rules are right, not that every route calls
-them. Integration tests over the handlers are the first thing in
-[`ROADMAP.md`](ROADMAP.md).
+These prove the rules are right, not that every route calls them — so there's a
+second layer: `npm run verify:e2e` drives 47 assertions over real HTTP against a
+seeded database, covering the forged-cookie, wrong-role, and wrong-file-type paths
+as well as the happy one.
+
+**Known gap:** the end-to-end script needs a live server and a seeded database, so
+it isn't part of `npm test` and doesn't run in CI. Wiring it to an ephemeral
+database is the top item in [`ROADMAP.md`](ROADMAP.md).
 
 ### 7. Upload imports a document rather than attaching a file
 

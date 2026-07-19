@@ -137,6 +137,37 @@ Both are the kind of thing that renders fine in dev and throws in the console:
   because the server and browser never share a clock tick. `RelativeTime` renders
   an absolute date on the server and swaps to relative after mount.
 
+### Unpinned the Gemini model after it 404'd
+
+I pinned `gemini-2.5-flash` — the obvious, specific, reproducible choice, and what
+every example uses. It returned:
+
+> `This model is no longer available to new users.`
+
+Google retires specific versions for *new* API keys. So a pinned model would have
+worked on whatever machine the pin was chosen on and broken for a reviewer using
+their own key — the worst kind of bug, because it looks like it works.
+
+Switched to the floating alias `gemini-flash-latest`, which always resolves to a
+current model. I gave up reproducibility for availability, which is the right way
+round for a demo someone else has to run. **I only found this because I tested the
+key before wiring it up**, rather than after.
+
+### Chased a failing round-trip test that turned out to be the test
+
+The end-to-end check reported that document formatting wasn't surviving a save.
+That's the single most important behaviour in the product, so I stopped and dug in
+rather than shipping around it.
+
+The stored document was byte-for-byte equivalent — only the **key order** differed:
+`{"type","text"}` came back as `{"text","type"}`. Postgres `jsonb` does not
+preserve key order, and my assertion was comparing `JSON.stringify` output, which
+is order-sensitive. The data was never wrong; the test was.
+
+The fix was `assert.deepStrictEqual`, and the lesson is the more useful output: a
+failing test is a hypothesis, not a verdict. Had I "fixed" the app here I'd have
+broken something that worked.
+
 ### Rewrote the framing of mocked auth
 
 The first instinct — mine as much as anything — was to treat seeded accounts as a
@@ -171,7 +202,12 @@ cases I specifically went looking for because they're the ones a plausible-looki
 implementation gets wrong: a document shared with its own owner must not demote
 them, and user-id matching must not be prefix-based.
 
-**The unhappy paths, by hand.** Not just the demo flow:
+**End-to-end, scripted.** `npm run verify:e2e` — 47 assertions driving real HTTP
+against a seeded database. This is the layer the unit tests can't reach: they
+prove the authorization rules are correct, this proves every route actually calls
+them. It's checked into the repo (`scripts/verify-e2e.mjs`), not a throwaway.
+
+**The unhappy paths, deliberately.** Not just the demo flow:
 
 - signed out → document URL → redirected to sign-in
 - signed in as a user with no access → `404`, not `403`

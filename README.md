@@ -102,30 +102,53 @@ is hidden rather than broken.
 | `npm run db:push` | Push the Prisma schema to the database |
 | `npm run db:seed` | Seed demo accounts and documents (idempotent) |
 | `npm run db:reset` | Drop, recreate and reseed |
+| `npm run verify:e2e` | End-to-end check against a running server |
 | `npm run lint` | ESLint |
 
 ---
 
 ## Tests
 
+### Unit — the access rules
+
 ```bash
 npm test
 ```
 
-The suite targets `lib/authz.ts` — the access-control rules. That's a deliberate
-choice about where limited test budget goes: a broken button is visible
-immediately, whereas a broken permission rule is silent and the failure mode is a
-document leaking to someone it was never shared with.
+12 cases over `lib/authz.ts`. That's a deliberate choice about where limited test
+budget goes: a broken button is visible immediately, whereas a broken permission
+rule is silent and the failure mode is a document leaking to someone it was never
+shared with.
 
-12 cases cover owner, editor, viewer, stranger and signed-out access, plus two
-edge cases worth naming: a document shared with its own owner must not demote
-them, and user-id matching must not be prefix-based.
+They cover owner, editor, viewer, stranger and signed-out access, plus two edge
+cases worth naming: a document shared with its own owner must not demote them,
+and user-id matching must not be prefix-based.
 
-They're pure functions, so the suite needs no database, no HTTP server and no
-mocks, and runs in about 300 ms.
+Pure functions, so the suite needs no database, no HTTP server and no mocks, and
+runs in about 300 ms.
 
-**Known gap:** these prove the rules are correct, not that every route calls them.
-Integration tests over the route handlers are first in the backlog.
+### End-to-end — that the routes actually apply them
+
+```bash
+npm run dev          # one terminal
+npm run verify:e2e   # another
+```
+
+47 assertions driving real HTTP against a seeded database. Unit tests prove the
+rules are right; this proves every route *calls* them. It covers the unhappy
+paths, not just the demo:
+
+- a forged session cookie is rejected
+- a stranger gets `404`, not `403`
+- a viewer's `PATCH` is refused server-side even though the UI hides the toolbar
+- an editor can neither delete nor re-share
+- re-sharing upserts the role instead of creating a duplicate grant
+- every mark and block type survives a save/reload **losslessly**
+- `.png`, empty, and oversized uploads are each rejected with the right status
+- a near-empty document is refused a summary rather than given a fabricated one
+
+It needs a live server and a seeded database, so it isn't part of `npm test`.
+Wiring it into CI against an ephemeral database is the top backlog item.
 
 ---
 

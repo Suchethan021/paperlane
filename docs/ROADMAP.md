@@ -22,7 +22,8 @@ and [`AI-WORKFLOW.md`](AI-WORKFLOW.md) for how AI tooling was used inside it.
 | ✅ | Project scaffold, TypeScript, Tailwind, ESLint |
 | ✅ | Data model: `User`, `Document`, `Share` |
 | ✅ | Authorization as pure functions (`canRead` / `canWrite` / `canManage`) |
-| ✅ | Unit tests for the access-control boundary |
+| ✅ | Unit tests for the access-control boundary (12 cases) |
+| ✅ | End-to-end verification script (47 assertions over real HTTP) |
 | ✅ | Mocked auth with a signed, httpOnly session cookie |
 | ✅ | Seeded demo accounts + fixture documents |
 | ✅ | Create / rename / delete a document |
@@ -63,10 +64,11 @@ and [`AI-WORKFLOW.md`](AI-WORKFLOW.md) for how AI tooling was used inside it.
 
 ## P3 — next 2–4 hours, in priority order
 
-1. **Integration tests over the route handlers.** The unit tests cover the
-   authorization *rules*; they don't prove every route calls them. A handful of
-   supertest-style tests against a test database would close that gap, and it is
-   the single highest-value thing left.
+1. **Get `verify:e2e` into CI.** The coverage already exists — 47 assertions over
+   real HTTP — but it needs a running server and a seeded database, so it isn't in
+   `npm test` and nothing stops a regression landing. A GitHub Action with an
+   ephemeral Postgres and a `next build && next start` step closes it, and it's the
+   highest-value hour left.
 2. **Export to Markdown / PDF.** ProseMirror JSON → Markdown is mechanical.
 3. **Optimistic concurrency.** Two editors on one document currently
    last-write-wins. An `updatedAt` precondition on `PATCH` would at least *detect*
