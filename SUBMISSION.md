@@ -9,7 +9,7 @@ Built inside the portal's **240-minute** timer.
 
 | | |
 | --- | --- |
-| **Live app** | `<LIVE_URL>` |
+| **Live app** | https://paperlane-docs.vercel.app |
 | **Source** | https://github.com/Suchethan021/paperlane |
 | **Walkthrough video** | `<VIDEO_URL>` |
 | **Drive folder** | `<DRIVE_URL>` |

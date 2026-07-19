@@ -7,7 +7,7 @@ Built as a timed take-home. The reasoning behind the scope lives in
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md); the backlog and the deliberate
 cuts are in [`docs/ROADMAP.md`](docs/ROADMAP.md).
 
-> **Live demo:** _(see SUBMISSION.md)_
+> **Live demo:** <https://paperlane-docs.vercel.app>
 
 ---
 
