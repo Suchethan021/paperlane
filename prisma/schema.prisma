@@ -1,0 +1,76 @@
+// Paperlane — data model
+//
+// Three tables. Ownership lives on Document.ownerId; every additional grant is a
+// row in Share. That split is deliberate: it means "who owns this" is a column
+// (cheap, always present, never ambiguous) while "who else can see it" is a set
+// that grows without touching the document row.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String @id @default(cuid())
+  name  String
+  email String @unique
+  color String @default("#6366f1") // avatar chip
+
+  documents  Document[] @relation("DocumentOwner")
+  lastEdited Document[] @relation("LastEditor")
+  shares     Share[]
+
+  createdAt DateTime @default(now())
+}
+
+model Document {
+  id      String @id @default(cuid())
+  title   String @default("Untitled document")
+  // ProseMirror JSON, not HTML. Storing the editor's own document model means a
+  // round trip is lossless and we never sanitise user HTML on the way out.
+  content Json
+
+  ownerId String
+  owner   User   @relation("DocumentOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  lastEditedById String?
+  lastEditedBy   User?   @relation("LastEditor", fields: [lastEditedById], references: [id], onDelete: SetNull)
+
+  shares Share[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ownerId])
+  @@index([updatedAt])
+}
+
+model Share {
+  id         String @id @default(cuid())
+  documentId String
+  userId     String
+  role       Role   @default(EDITOR)
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  // One grant per person per document — re-sharing updates the role instead of
+  // stacking duplicate rows.
+  @@unique([documentId, userId])
+  @@index([userId])
+}
+
+// Enum rather than a lookup table: these values are *behavioural* — the
+// authorization code has to branch on them, so adding one always means shipping
+// code. A lookup table would buy an INSERT you can't actually use without a
+// deploy. See docs/ARCHITECTURE.md.
+enum Role {
+  VIEWER
+  EDITOR
+}
