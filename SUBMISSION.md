@@ -20,10 +20,10 @@ No passwords — pick an account. Switch accounts from the avatar menu, top righ
 
 | Account | Email | Why it exists |
 | --- | --- | --- |
-| Suchethan Kummajella | `suchethan@paperlane.app` | Owns the welcome doc + a private draft; **editor** on Priya's doc |
-| Priya Raman | `priya@paperlane.app` | Owns *Q3 Product Review*; **editor** on the welcome doc |
-| Marcus Lee | `marcus@paperlane.app` | **Viewer** on the welcome doc — read-only; owns a doc nobody else can see |
-| Aisha Khan | `aisha@paperlane.app` | Access to **nothing** — proves documents don't leak |
+| Suchethan Kummajella | `suchethan@paperlane.example` | Owns the welcome doc + a private draft; **editor** on Priya's doc |
+| Priya Raman | `priya@paperlane.example` | Owns *Q3 Product Review*; **editor** on the welcome doc |
+| Marcus Lee | `marcus@paperlane.example` | **Viewer** on the welcome doc — read-only; owns a doc nobody else can see |
+| Aisha Khan | `aisha@paperlane.example` | Access to **nothing** — proves documents don't leak |
 
 **60-second tour:** sign in as **Suchethan** → open *Welcome to Paperlane* → edit,
 watch it autosave → switch to **Priya**, it's under *Shared with me* and editable →

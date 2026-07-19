@@ -27,10 +27,10 @@ const doc = (...content: unknown[]) => ({ type: "doc", content }) as Prisma.Inpu
 // ── Users ────────────────────────────────────────────────────────────────────
 
 const USERS = [
-  { key: "suchethan", name: "Suchethan Kummajella", email: "suchethan@paperlane.app", color: "#6366f1" },
-  { key: "priya", name: "Priya Raman", email: "priya@paperlane.app", color: "#ec4899" },
-  { key: "marcus", name: "Marcus Lee", email: "marcus@paperlane.app", color: "#f59e0b" },
-  { key: "aisha", name: "Aisha Khan", email: "aisha@paperlane.app", color: "#10b981" },
+  { key: "suchethan", name: "Suchethan Kummajella", email: "suchethan@paperlane.example", color: "#6366f1" },
+  { key: "priya", name: "Priya Raman", email: "priya@paperlane.example", color: "#ec4899" },
+  { key: "marcus", name: "Marcus Lee", email: "marcus@paperlane.example", color: "#f59e0b" },
+  { key: "aisha", name: "Aisha Khan", email: "aisha@paperlane.example", color: "#10b981" },
 ] as const;
 
 async function main() {

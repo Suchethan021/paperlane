@@ -88,7 +88,7 @@ check("editor DELETE refused (403)", delAsEditor.status === 403, `got ${delAsEdi
 
 const shareAsEditor = await call(cp, `/api/documents/${welcome.id}/share`, {
   method: "POST", headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ email: "aisha@paperlane.app", role: "EDITOR" }),
+  body: JSON.stringify({ email: "aisha@paperlane.example", role: "EDITOR" }),
 });
 check("editor cannot re-share (403)", shareAsEditor.status === 403, `got ${shareAsEditor.status}`);
 
@@ -150,7 +150,7 @@ check("empty patch rejected (400)", emptyPatch.status === 400, `got ${emptyPatch
 console.log("\n── 6. Sharing ──");
 const grant = await call(cs, `/api/documents/${created.id}/share`, {
   method: "POST", headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ email: "aisha@paperlane.app", role: "VIEWER" }),
+  body: JSON.stringify({ email: "aisha@paperlane.example", role: "VIEWER" }),
 });
 check("owner grants viewer access (201)", grant.status === 201, `got ${grant.status}`);
 
@@ -160,7 +160,7 @@ check("shown as VIEWER", aiList.shared[0]?.shares?.[0]?.role === "VIEWER");
 
 const upgrade = await call(cs, `/api/documents/${created.id}/share`, {
   method: "POST", headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ email: "aisha@paperlane.app", role: "EDITOR" }),
+  body: JSON.stringify({ email: "aisha@paperlane.example", role: "EDITOR" }),
 });
 check("re-share upserts role (201)", upgrade.status === 201);
 const aiList2 = await (await call(ca, "/api/documents")).json();

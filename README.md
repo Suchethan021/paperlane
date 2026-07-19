@@ -48,10 +48,10 @@ way to see sharing work.
 
 | Account | Email | Set up so that… |
 | --- | --- | --- |
-| **Suchethan Kummajella** | `suchethan@paperlane.app` | owns *Welcome to Paperlane* and a private draft; has editor access to Priya's document |
-| **Priya Raman** | `priya@paperlane.app` | owns *Q3 Product Review*; has **editor** access to the welcome doc |
-| **Marcus Lee** | `marcus@paperlane.app` | has **viewer** access to the welcome doc — read-only; owns a document nobody else can see |
-| **Aisha Khan** | `aisha@paperlane.app` | has access to **nothing** — useful for confirming documents don't leak |
+| **Suchethan Kummajella** | `suchethan@paperlane.example` | owns *Welcome to Paperlane* and a private draft; has editor access to Priya's document |
+| **Priya Raman** | `priya@paperlane.example` | owns *Q3 Product Review*; has **editor** access to the welcome doc |
+| **Marcus Lee** | `marcus@paperlane.example` | has **viewer** access to the welcome doc — read-only; owns a document nobody else can see |
+| **Aisha Khan** | `aisha@paperlane.example` | has access to **nothing** — useful for confirming documents don't leak |
 
 ### A 60-second tour
 
