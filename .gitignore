@@ -88,3 +88,9 @@ coverage/
 CLAUDE.md
 AGENTS.md
 .claude/
+
+.vercel
+.env*
+
+# Vercel CLI appends .env* above; keep the example file tracked.
+!.env.example
