@@ -13,7 +13,8 @@
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
     "db:reset": "prisma db push --force-reset && prisma db seed",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "verify:e2e": "node scripts/verify-e2e.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
