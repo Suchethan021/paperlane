@@ -1,26 +1,175 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ink-50: #f8f9fb;
+  --color-ink-100: #f1f3f7;
+  --color-ink-200: #e4e7ee;
+  --color-ink-300: #cdd2de;
+  --color-ink-400: #99a1b3;
+  --color-ink-500: #6b7488;
+  --color-ink-600: #4b5468;
+  --color-ink-700: #353c4d;
+  --color-ink-800: #232936;
+  --color-ink-900: #151a24;
+
+  --color-accent: #4f46e5;
+  --color-accent-soft: #eef2ff;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink-100);
+  color: var(--color-ink-800);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── The document surface ──────────────────────────────────────────────────
+   TipTap ships no styles at all, so headings and lists render as plain text
+   until they are given some here. These selectors are the editor's typography. */
+
+.paper .tiptap {
+  outline: none;
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-ink-800);
+}
+
+.paper .tiptap > * + * {
+  margin-top: 0.85em;
+}
+
+.paper .tiptap h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 1.6em;
+  letter-spacing: -0.015em;
+}
+
+.paper .tiptap h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 1.5em;
+}
+
+.paper .tiptap h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 1.4em;
+}
+
+.paper .tiptap h1:first-child,
+.paper .tiptap h2:first-child,
+.paper .tiptap h3:first-child {
+  margin-top: 0;
+}
+
+.paper .tiptap ul,
+.paper .tiptap ol {
+  padding-left: 1.5rem;
+}
+
+.paper .tiptap ul {
+  list-style: disc;
+}
+
+.paper .tiptap ol {
+  list-style: decimal;
+}
+
+.paper .tiptap li {
+  margin: 0.2em 0;
+}
+
+.paper .tiptap li > p {
+  margin: 0;
+}
+
+.paper .tiptap blockquote {
+  border-left: 3px solid var(--color-ink-300);
+  padding-left: 1rem;
+  color: var(--color-ink-600);
+  font-style: italic;
+}
+
+.paper .tiptap code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875em;
+  background: var(--color-ink-100);
+  border: 1px solid var(--color-ink-200);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+.paper .tiptap pre {
+  background: var(--color-ink-900);
+  color: var(--color-ink-100);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  overflow-x: auto;
+}
+
+.paper .tiptap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+.paper .tiptap hr {
+  border: none;
+  border-top: 1px solid var(--color-ink-200);
+  margin: 1.8em 0;
+}
+
+.paper .tiptap a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+/* Placeholder for a genuinely empty document. */
+.paper .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--color-ink-400);
+}
+
+/* ── Motion ──────────────────────────────────────────────────────────────── */
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise-in {
+  animation: riseIn 0.28s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
