@@ -83,7 +83,7 @@ export function DocumentActions() {
           type="button"
           onClick={() => fileRef.current?.click()}
           disabled={busy !== null}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-ink-300 bg-white px-3 py-2 text-sm font-medium text-ink-700 transition hover:bg-ink-50 disabled:opacity-50"
+          className="surface inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-ink-700 transition hover:bg-white disabled:opacity-50"
         >
           <Upload className="h-4 w-4" />
           {busy === "import" ? "Importing…" : "Import file"}
@@ -93,7 +93,7 @@ export function DocumentActions() {
           type="button"
           onClick={createBlank}
           disabled={busy !== null}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
+          className="btn-accent inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
         >
           <FilePlus2 className="h-4 w-4" />
           {busy === "new" ? "Creating…" : "New document"}

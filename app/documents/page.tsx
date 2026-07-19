@@ -30,13 +30,20 @@ export default async function DocumentsPage() {
       <AppHeader user={user} users={users} />
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4 rise-in">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-ink-900">
+            <h1 className="text-3xl font-semibold tracking-tight text-ink-900">
               Documents
             </h1>
-            <p className="mt-1 text-sm text-ink-500">
-              Signed in as {user.name}.
+            <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink-500">
+              <span>
+                Signed in as{" "}
+                <strong className="font-medium text-ink-700">{user.name}</strong>
+              </span>
+              <span className="text-ink-300">·</span>
+              <span>
+                {owned.length} owned, {shared.length} shared with you
+              </span>
             </p>
           </div>
           <DocumentActions />
@@ -113,11 +120,13 @@ function Section({
       </h2>
 
       {count === 0 ? (
-        <p className="rounded-xl border border-dashed border-ink-300 bg-white/50 px-4 py-8 text-center text-sm text-ink-400">
+        <p className="rounded-2xl border border-dashed border-ink-300/70 bg-white/40 px-4 py-10 text-center text-sm text-ink-400">
           {empty}
         </p>
       ) : (
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{children}</ul>
+        <ul className="stagger grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {children}
+        </ul>
       )}
     </section>
   );
@@ -141,12 +150,14 @@ function DocumentCard({
   badgeTone: "accent" | "muted";
 }) {
   return (
-    <li className="rise-in">
+    <li>
       <Link
         href={`/documents/${id}`}
-        className="flex h-full flex-col rounded-xl border border-ink-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-ink-300 hover:shadow-md"
+        className="surface card-hover group flex h-full flex-col rounded-2xl p-4"
       >
-        <h3 className="truncate text-sm font-semibold text-ink-900">{title}</h3>
+        <h3 className="truncate text-sm font-semibold text-ink-900 transition group-hover:text-accent">
+          {title}
+        </h3>
         <p className="mt-1.5 line-clamp-2 flex-1 text-xs leading-relaxed text-ink-500">
           {snippet}
         </p>

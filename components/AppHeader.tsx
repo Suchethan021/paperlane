@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, LogOut } from "lucide-react";
+import { ChevronDown, FileText, LogOut } from "lucide-react";
 import { Avatar } from "./Avatar";
 
 interface Person {
@@ -71,11 +71,15 @@ export function AppHeader({
   }
 
   return (
-    <header className="sticky top-0 z-30 border-b border-ink-200 bg-white/85 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-ink-200/60 bg-white/75 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:px-6">
-        <Link href="/documents" className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent text-sm font-bold text-white">
-            P
+        <Link
+          href="/documents"
+          className="group flex items-center gap-2"
+          aria-label="Paperlane home"
+        >
+          <span className="brand-mark flex h-7 w-7 items-center justify-center rounded-lg transition group-hover:scale-105">
+            <FileText className="h-4 w-4 text-white" strokeWidth={2.4} />
           </span>
           <span className="hidden text-sm font-semibold tracking-tight text-ink-900 sm:block">
             Paperlane
@@ -99,7 +103,7 @@ export function AppHeader({
           {open && (
             <div
               role="menu"
-              className="absolute right-0 mt-2 w-72 origin-top-right rounded-xl border border-ink-200 bg-white p-1.5 shadow-lg rise-in"
+              className="surface-raised absolute right-0 mt-2 w-72 origin-top-right rounded-xl p-1.5 rise-in"
             >
               <div className="px-2.5 py-2">
                 <p className="text-sm font-medium text-ink-900">{user.name}</p>
