@@ -26,10 +26,87 @@ body {
 }
 
 body {
-  background: var(--color-ink-100);
   color: var(--color-ink-800);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Two soft colour washes over a near-white base. Fixed so it doesn't drift
+     while scrolling a long document. */
+  background-color: #f6f7fb;
+  background-image:
+    radial-gradient(58rem 34rem at 12% -8%, rgba(99, 102, 241, 0.13), transparent 60%),
+    radial-gradient(48rem 30rem at 96% 4%, rgba(14, 165, 233, 0.11), transparent 62%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* ── Surfaces ──────────────────────────────────────────────────────────────
+   Layered hairline + shadow rather than a single hard border: reads as depth
+   at any zoom, and stays crisp on a HiDPI screen. */
+
+.surface {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(21, 26, 36, 0.05),
+    0 1px 2px rgba(21, 26, 36, 0.04),
+    0 8px 24px -12px rgba(21, 26, 36, 0.16);
+}
+
+.surface-raised {
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(21, 26, 36, 0.06),
+    0 2px 4px rgba(21, 26, 36, 0.04),
+    0 18px 44px -16px rgba(21, 26, 36, 0.24);
+}
+
+.card-hover {
+  transition:
+    transform 0.18s cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 0.18s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgba(79, 70, 229, 0.18),
+    0 2px 4px rgba(21, 26, 36, 0.04),
+    0 16px 32px -14px rgba(79, 70, 229, 0.3);
+}
+
+/* The brand mark — a small gradient tile used in the header and on sign-in. */
+.brand-mark {
+  background-image: linear-gradient(140deg, #6366f1 0%, #4f46e5 45%, #0ea5e9 100%);
+  box-shadow:
+    0 1px 2px rgba(79, 70, 229, 0.4),
+    0 6px 16px -6px rgba(79, 70, 229, 0.6);
+}
+
+.btn-accent {
+  background-image: linear-gradient(140deg, #6366f1, #4f46e5);
+  box-shadow:
+    0 1px 2px rgba(79, 70, 229, 0.32),
+    0 6px 14px -6px rgba(79, 70, 229, 0.5);
+  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-accent:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.btn-accent:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Focus ring, applied once so every control agrees. */
+:where(button, a, input, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 /* ── The document surface ──────────────────────────────────────────────────
@@ -163,6 +240,19 @@ body {
 .rise-in {
   animation: riseIn 0.28s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
+
+/* Staggered entrance for lists — each child starts a beat after the last.
+   Capped at 8 so a long list doesn't take a second to appear. */
+.stagger > * {
+  animation: riseIn 0.34s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.02s; }
+.stagger > *:nth-child(2) { animation-delay: 0.06s; }
+.stagger > *:nth-child(3) { animation-delay: 0.1s; }
+.stagger > *:nth-child(4) { animation-delay: 0.14s; }
+.stagger > *:nth-child(5) { animation-delay: 0.18s; }
+.stagger > *:nth-child(6) { animation-delay: 0.22s; }
+.stagger > *:nth-child(n + 7) { animation-delay: 0.26s; }
 
 @media (prefers-reduced-motion: reduce) {
   *,
