@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 const UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
   ["year", 31_536_000_000],
@@ -10,8 +10,8 @@ const UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
   ["minute", 60_000],
 ];
 
-function relative(iso: string): string {
-  const diff = Date.parse(iso) - Date.now();
+function relative(iso: string, now: number): string {
+  const diff = Date.parse(iso) - now;
   const abs = Math.abs(diff);
   if (abs < 45_000) return "just now";
 
@@ -22,23 +22,34 @@ function relative(iso: string): string {
   return "just now";
 }
 
+/** Re-render once a minute; that's the finest granularity the label shows. */
+function subscribe(onChange: () => void): () => void {
+  const id = setInterval(onChange, 60_000);
+  return () => clearInterval(id);
+}
+
+/** Bucketed to the minute so the snapshot is stable between renders. */
+const clientSnapshot = () => Math.floor(Date.now() / 60_000);
+const serverSnapshot = () => null;
+
 /**
- * Renders an absolute date on the server and swaps to "3 minutes ago" after
- * mount. Formatting relative time during SSR guarantees a hydration mismatch,
- * because the server and the browser never share a clock tick.
+ * Renders an absolute date on the server and a relative one in the browser.
+ *
+ * Formatting relative time during SSR guarantees a hydration mismatch, because
+ * the server and the browser never share a clock tick. `useSyncExternalStore` is
+ * the right primitive here rather than an effect that calls setState: it gives
+ * React an explicit server snapshot, so the first client render already agrees
+ * with the server markup.
  */
 export function RelativeTime({ value }: { value: string }) {
-  const [label, setLabel] = useState<string | null>(null);
+  const minute = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot);
 
-  useEffect(() => {
-    setLabel(relative(value));
-    const id = setInterval(() => setLabel(relative(value)), 60_000);
-    return () => clearInterval(id);
-  }, [value]);
+  const label =
+    minute === null ? value.slice(0, 10) : relative(value, minute * 60_000);
 
   return (
-    <time dateTime={value} title={new Date(value).toLocaleString()}>
-      {label ?? value.slice(0, 10)}
+    <time dateTime={value} suppressHydrationWarning>
+      {label}
     </time>
   );
 }
