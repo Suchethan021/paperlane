@@ -160,7 +160,7 @@ export function DocumentWorkspace({
             <button
               type="button"
               onClick={() => setSummaryOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-ink-300 bg-white px-2.5 py-1.5 text-xs font-medium text-ink-700 transition hover:bg-ink-50"
+              className="surface inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-ink-700 transition hover:bg-white"
             >
               <Sparkles className="h-3.5 w-3.5 text-accent" />
               Summarise
@@ -172,7 +172,7 @@ export function DocumentWorkspace({
               <button
                 type="button"
                 onClick={() => setShareOpen(true)}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-2.5 py-1.5 text-xs font-medium text-white transition hover:brightness-110"
+                className="btn-accent inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-white"
               >
                 <Users className="h-3.5 w-3.5" />
                 Share
@@ -187,7 +187,7 @@ export function DocumentWorkspace({
                 onClick={remove}
                 aria-label="Delete document"
                 title="Delete document"
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-ink-300 bg-white text-ink-500 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+                className="surface flex h-8 w-8 items-center justify-center rounded-lg text-ink-500 transition hover:bg-red-50 hover:text-red-600"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </button>
@@ -215,7 +215,7 @@ export function DocumentWorkspace({
       )}
 
       {/* ── Paper ────────────────────────────────────────────────────────── */}
-      <article className="paper rounded-2xl border border-ink-200 bg-white px-6 py-8 shadow-sm sm:px-12 sm:py-12">
+      <article className="paper surface-raised rounded-2xl px-6 py-8 sm:px-14 sm:py-14">
         <input
           value={title}
           onChange={(e) => onTitleChange(e.target.value)}

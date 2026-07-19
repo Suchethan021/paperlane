@@ -68,7 +68,7 @@ export function SummaryPanel({
         role="dialog"
         aria-modal="true"
         aria-labelledby="summary-title"
-        className="w-full max-w-lg rounded-2xl border border-ink-200 bg-white p-5 shadow-xl rise-in"
+        className="surface-raised w-full max-w-lg rounded-2xl p-5 rise-in"
       >
         <div className="mb-4 flex items-start justify-between gap-3">
           <div className="min-w-0">

@@ -104,7 +104,7 @@ export function ShareDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="share-title"
-        className="w-full max-w-md rounded-2xl border border-ink-200 bg-white p-5 shadow-xl rise-in"
+        className="surface-raised w-full max-w-md rounded-2xl p-5 rise-in"
       >
         <div className="mb-4 flex items-start justify-between">
           <div>
@@ -156,7 +156,7 @@ export function ShareDialog({
           <button
             type="submit"
             disabled={busy}
-            className="rounded-lg bg-accent px-3 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-50"
+            className="btn-accent rounded-lg px-3 py-2 text-sm font-medium text-white disabled:opacity-50"
           >
             Share
           </button>

@@ -63,7 +63,7 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
     )?.level ?? 0;
 
   return (
-    <div className="flex flex-wrap items-center gap-0.5 rounded-xl border border-ink-200 bg-white px-2 py-1.5 shadow-sm">
+    <div className="surface flex flex-wrap items-center gap-0.5 rounded-xl px-2 py-1.5">
       <select
         aria-label="Text style"
         value={currentHeading}
