@@ -83,3 +83,8 @@ coverage/
 
 # Vercel
 .vercel
+
+# AI assistant scaffold files (not part of the product)
+CLAUDE.md
+AGENTS.md
+.claude/
