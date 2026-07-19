@@ -5,7 +5,12 @@ import { fail, guard, ok, requireUser } from "@/lib/api";
 
 type Ctx = { params: Promise<{ id: string }> };
 
-const MODEL = "gemini-2.5-flash";
+// The floating alias rather than a pinned version, deliberately. A pinned model
+// was the first choice and it returned 404 in testing: Google retires specific
+// versions for new API keys, so the pin would have worked on my machine and
+// broken for a reviewer with their own key. The alias always resolves to a
+// current model.
+const MODEL = "gemini-flash-latest";
 const MAX_CHARS = 24_000; // well inside the context window, and bounds cost
 
 /**
