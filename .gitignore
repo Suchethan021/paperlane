@@ -39,3 +39,47 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+_local/
+
+# Deps / build
+node_modules/
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Local DB
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+prisma/dev.db*
+
+# Uploads (runtime user content)
+/uploads/
+/public/uploads/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Test / coverage
+coverage/
+.vitest/
+
+# Vercel
+.vercel
