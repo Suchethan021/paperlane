@@ -94,3 +94,6 @@ AGENTS.md
 
 # Vercel CLI appends .env* above; keep the example file tracked.
 !.env.example
+
+# Submission staging (zips, drive uploads)
+_submission/
