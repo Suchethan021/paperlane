@@ -2,11 +2,21 @@
   "name": "paperlane",
   "version": "0.1.0",
   "private": true,
+  "description": "A lightweight collaborative document editor — create, format, import and share documents.",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
+    "db:reset": "prisma db push --force-reset && prisma db seed",
+    "postinstall": "prisma generate"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@google/genai": "^2.12.0",
